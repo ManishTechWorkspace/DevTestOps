@@ -7,7 +7,7 @@ pipeline{
     stages{
         stage("code checkout"){
             steps{
-            sh "echo hello"
+            sh "checkout scm"
             }
         }   
         stage("code build"){
@@ -23,7 +23,7 @@ pipeline{
         stage("Sonar Analysis"){
           steps {
                 withSonarQubeEnv('sonarqube') {
-                    sh "${scannerHome}/bin/sonar-scanner"
+                    sh "mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.8.0.2131:sonar" 
                 }
             }
         }
