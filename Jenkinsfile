@@ -7,7 +7,7 @@ pipeline{
     stages{
         stage("code checkout"){
             steps{
-            sh "checkout scm"
+            sh "echo hello"
             }
         }   
         stage("code build"){
