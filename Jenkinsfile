@@ -27,7 +27,29 @@ pipeline{
                 }
             }
         }
-    
+    stage("Publish to Artifactory"){
+            steps{
+                rtMavenDeployer(
+                    id: 'deployer',
+                    serverId: '12345678@artifactory',
+                    releaseRepo: 'varsha.rajput',
+                    snapshotRepo: 'varsha.rajput'
+                )
+                rtMavenRun(
+                    pom: 'pom.xml',
+                    goals: 'clean install',
+                    deployerId: 'deployer'
+                    )
+                rtPublishBuildInfo(
+                    serverId:'12345678@artifactory',
+                )
+            }        
+        }
+        stage("Invoke UI Test Pipeline"){
+			steps{
+				build job: 'Dev-Ops-Freestyle-Practice'
+			}
+		}
        
     }
     post{
